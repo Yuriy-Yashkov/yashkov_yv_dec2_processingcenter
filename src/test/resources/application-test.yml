@@ -1,0 +1,43 @@
+logging:
+  level:
+    root: INFO
+    org:
+      springframework: INFO
+      springframework.security: DEBUG
+      springframework.data.redis.cache: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n"
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        physical_naming_strategy=org:
+          hibernate:
+            boot:
+              model:
+                naming:
+                  CamelCaseToUnderscoresNamingStrategy:
+  liquibase:
+    change-log: classpath:/db/changelog/master.yaml
+    enabled: true
+
+  cache:
+    type: redis
+  data:
+    redis:
+      port: 6379
+      host: localhost
+      lifetime: 10s
+
+token:
+  key: 53A73E5F1C4E0A2D3B5F2D784E6A1B423D6F247D1F6E5C3A596D635A75327855
+  lifetime: 60m

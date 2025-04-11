@@ -1,0 +1,37 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: Yury Yashkov
+      changes:
+        #        - sqlFile:
+        #            path: /db/changelog/ddl/create_card_status.sql
+        - sqlFile:
+            path: /db/changelog/ddl/create_payment_system.sql
+        #        - sqlFile:
+        #            path: /db/changelog/ddl/create_issuing_bank.sql
+        #        - sqlFile:
+        #            path: /db/changelog/ddl/create_currency.sql
+        #        - sqlFile:
+        #            path: /db/changelog/ddl/create_account.sql
+        - sqlFile:
+            path: /db/changelog/ddl/create_card.sql
+        - sqlFile:
+            path: /db/changelog/ddl/create_response_code.sql
+        - sqlFile:
+            path: /db/changelog/ddl/create_transaction_type.sql
+        - sqlFile:
+            path: /db/changelog/ddl/create_merchant_category_code.sql
+        - sqlFile:
+            path: /db/changelog/ddl/create_acquiring_bank.sql
+        - sqlFile:
+            path: /db/changelog/ddl/create_sales_point.sql
+        - sqlFile:
+            path: /db/changelog/ddl/create_terminal.sql
+        - sqlFile:
+            path: /db/changelog/ddl/create_transaction.sql
+        - sqlFile:
+            path: /db/changelog/dml/dataTables.sql
+        - sqlFile:
+            path: db/changelog/ddl/create_user_access.sql
+        - sqlFile:
+            path: db/changelog/dml/dataTableUserAccess.sql
