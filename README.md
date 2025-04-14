@@ -22,6 +22,8 @@ docker exec -it <имя_контейнера> redis-cli - зайти в конт
 
 **del "cards::SimpleKey []"** - очистка кэша. Имя, что удалить - "cards::SimpleKey []".
 
+**FLUSHDB** - Удалить все ключи из текущей базы.
+
 
 #### Запуск: через docker-compose.yml
 

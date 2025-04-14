@@ -12,6 +12,7 @@ public class AccountDTO {// TODO: 21.03.2025 Не использую, пока
     private long id;
     private String accountNumber;
     private BigDecimal balance;
+//    dcdc
 //    private Currency currency;
 //    private IssuingBank issuingBank;
 }
