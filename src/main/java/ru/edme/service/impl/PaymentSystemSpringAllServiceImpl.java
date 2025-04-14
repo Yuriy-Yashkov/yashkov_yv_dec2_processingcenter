@@ -5,9 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.edme.exception.EntityNotFoundException;
 import ru.edme.model.PaymentSystem;
 import ru.edme.repository.PaymentSystemRepository;
 import ru.edme.service.PaymentSystemAllService;
@@ -18,7 +18,6 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-@PreAuthorize("hasAuthority('ADMIN')")
 public class PaymentSystemSpringAllServiceImpl implements PaymentSystemAllService {
 
     private final PaymentSystemRepository paymentSystemRepository;
@@ -37,7 +36,7 @@ public class PaymentSystemSpringAllServiceImpl implements PaymentSystemAllServic
         log.info("Данные взяты из БД.");
 
         return paymentSystemRepository.findById(id).orElseThrow(
-                () -> new RuntimeException(
+                () -> new EntityNotFoundException(
                         String.format("Не удалось прочитать объект! - %s = %d", entityClass.getSimpleName(), id))
         );
     }

@@ -39,7 +39,6 @@ class CardControllerTest {
     TestData testData = new TestData();
 
     @Test
-    @WithMockUser
     void create() throws Exception {
         Card card = testData.cardId;
         String jsonRequest = objectMapper.writeValueAsString(card);

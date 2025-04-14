@@ -3,16 +3,8 @@ databaseChangeLog:
       id: 1
       author: Yury Yashkov
       changes:
-        #        - sqlFile:
-        #            path: /db/changelog/ddl/create_card_status.sql
         - sqlFile:
             path: /db/changelog/ddl/create_payment_system.sql
-        #        - sqlFile:
-        #            path: /db/changelog/ddl/create_issuing_bank.sql
-        #        - sqlFile:
-        #            path: /db/changelog/ddl/create_currency.sql
-        #        - sqlFile:
-        #            path: /db/changelog/ddl/create_account.sql
         - sqlFile:
             path: /db/changelog/ddl/create_card.sql
         - sqlFile:

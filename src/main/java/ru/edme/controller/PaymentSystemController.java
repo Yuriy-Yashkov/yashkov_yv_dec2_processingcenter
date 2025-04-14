@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +25,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@PreAuthorize("hasAuthority('ADMIN')")
 @RequestMapping("v1/cards/payment-system")
 @Tag(name = "Payment System Controller", description = "Управление платежными системами")
 public class PaymentSystemController {
@@ -47,6 +49,7 @@ public class PaymentSystemController {
     @ApiResponse(responseCode = "404", description = "Платежная система не найдена")
     @GetMapping("/{id}")
     public ResponseEntity<PaymentSystem> findById(@Parameter(description = "ID платежной системы", example = "1")
+//                                                  @Positive
                                                   @PathVariable("id") Long id) {
         return ResponseEntity.ok(paymentSystemAllService.findById(id));
     }
@@ -73,7 +76,9 @@ public class PaymentSystemController {
     @ApiResponse(responseCode = "200", description = "Платежная система успешно удалена")
     @ApiResponse(responseCode = "404", description = "Платежная система не найдена")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@Parameter(description = "ID платежной системы", example = "1") @PathVariable("id") Long id) {
+    public ResponseEntity<Void> delete(@Parameter(description = "ID платежной системы", example = "1")
+//                                       @Positive
+                                       @PathVariable("id") Long id) {
         boolean delete = paymentSystemAllService.delete(id);
 
         return delete ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();

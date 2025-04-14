@@ -6,9 +6,11 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +27,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("v1/cards")
+@PreAuthorize("hasAuthority('ADMIN')")
 @Tag(name = "Card Controller", description = "Управление картами (Card)")
 public class CardController {
 
@@ -45,7 +48,7 @@ public class CardController {
                     schema = @Schema(implementation = Card.class)))
     @ApiResponse(responseCode = "404", description = "Карта не найдена")
     @GetMapping("/{id}")
-    public ResponseEntity<Card> findById(@PathVariable("id") Long id) {
+    public ResponseEntity<Card> findById(@Positive @PathVariable("id") Long id) {
         return ResponseEntity.ok(cardAllService.findById(id));
     }
 
@@ -71,7 +74,9 @@ public class CardController {
     @ApiResponse(responseCode = "200", description = "Карта успешно удалена")
     @ApiResponse(responseCode = "404", description = "Карта не найдена")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@Parameter(description = "ID карты", example = "1") @PathVariable("id") Long id) {
+    public ResponseEntity<Void> delete(@Parameter(description = "ID карты", example = "1")
+                                       @Positive
+                                       @PathVariable("id") Long id) {
         boolean delete = cardAllService.delete(id);
 
         return delete ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();

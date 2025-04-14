@@ -1,12 +1,12 @@
 package ru.edme.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.edme.exception.EntityNotFoundException;
 import ru.edme.model.UserAccess;
 import ru.edme.repository.UserAccessRepository;
 
@@ -27,26 +27,22 @@ public class UserAccessService implements UserDetailsService {
     }
 
     @Transactional
-    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
     public UserAccess save(UserAccess entity) {
         return userAccessRepository.save(entity);
     }
 
-    @PreAuthorize("hasAuthority('ADMIN') or (hasAuthority('USER') and #id == authentication.principal.id)")
     public UserAccess findById(Long id) {
         return userAccessRepository.findById(id).orElseThrow(
-                () -> new RuntimeException(
+                () -> new EntityNotFoundException(
                         String.format("Не удалось прочитать объект! - %s = %d", entityClass.getSimpleName(), id))
         );
     }
 
-    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
     public List<UserAccess> findAll() {
         return userAccessRepository.findAll();
     }
 
     @Transactional
-    @PreAuthorize("hasAuthority('ADMIN')")
     public UserAccess update(UserAccess entity) {
         UserAccess userAccess = findById(entity.getId());
         userAccess.setUserLogin(entity.getUserLogin());
@@ -58,7 +54,6 @@ public class UserAccessService implements UserDetailsService {
     }
 
     @Transactional
-    @PreAuthorize("hasAuthority('ADMIN')")
     public boolean delete(Long id) {
         UserAccess userAccess = findById(id);
         userAccessRepository.delete(userAccess);

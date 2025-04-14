@@ -57,7 +57,7 @@ class PaymentSystemControllerTest {
 
     @Test
     void findById_ShouldReturnOk_WhenExists() throws Exception {
-        PaymentSystem paymentSystem = testData.paymentSystem;
+        PaymentSystem paymentSystem = testData.paymentSystemId;
         Long id = paymentSystem.getId();
 
         Mockito.when(paymentSystemAllService.findById(id)).thenReturn(paymentSystem);
@@ -102,7 +102,7 @@ class PaymentSystemControllerTest {
 
     @Test
     void delete_ShouldReturnOk_WhenExists() throws Exception {
-        Long id = testData.paymentSystem.getId();
+        Long id = testData.paymentSystemId.getId();
 
         Mockito.when(paymentSystemAllService.delete(id)).thenReturn(true);
 
@@ -114,7 +114,7 @@ class PaymentSystemControllerTest {
 
     @Test
     void delete_ShouldReturnNotFound_WhenDoesNotExist() throws Exception {
-        Long id = testData.paymentSystem.getId();
+        Long id = testData.paymentSystemId.getId();
 
         Mockito.when(paymentSystemAllService.delete(id)).thenReturn(false);
 

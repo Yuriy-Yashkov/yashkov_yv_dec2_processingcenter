@@ -7,6 +7,7 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -94,12 +95,6 @@ public class JwtService {
         return extractClaim(token, Claims::getExpiration).before(new Date());
     }
 
-//    public List<GrantedAuthority> extractRoles(String token) {
-//        Claims claims = extractAllClaims(token);
-//        List<String> roles = claims.get("roles", List.class);
-//        return roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
-//    }
-
     /**
      * Извлекает список ролей из токена.
      * <p>
@@ -108,8 +103,10 @@ public class JwtService {
      * @param token JWT-токен
      * @return список ролей
      */
-    public List<String> extractRoles(String token) {
-        return extractAllClaims(token).get("roles", List.class);
+    public List<GrantedAuthority> extractRoles(String token) {
+        Claims claims = extractAllClaims(token);
+        List<String> roles = claims.get("roles", List.class);
+        return roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
     }
 
     /**

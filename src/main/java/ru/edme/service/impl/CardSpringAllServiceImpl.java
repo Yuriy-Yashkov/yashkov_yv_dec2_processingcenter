@@ -8,6 +8,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.edme.exception.EntityNotFoundException;
 import ru.edme.model.Card;
 import ru.edme.model.PaymentSystem;
 import ru.edme.repository.CardRepository;
@@ -21,7 +22,6 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-@PreAuthorize("hasAuthority('ADMIN')")
 public class CardSpringAllServiceImpl implements CardAllService {
 
     private final CardRepository cardRepository;
@@ -48,7 +48,7 @@ public class CardSpringAllServiceImpl implements CardAllService {
     @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
     public Card findById(Long id) {
         return cardRepository.findById(id).orElseThrow(
-                () -> new RuntimeException(
+                () -> new EntityNotFoundException(
                         String.format("Не удалось прочитать объект! - %s = %d", Card.class.getSimpleName(), id))
         );
     }
